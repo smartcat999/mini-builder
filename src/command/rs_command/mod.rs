@@ -44,9 +44,7 @@ pub fn handler(matches: &ArgMatches, tpl: TeraTplService) {
 
     path = name.to_string();
     if !name.ends_with('/') {
-        path += "/src/";
-    } else {
-        path += "src/"
+        path += "/";
     }
 
     if !Path::exists(Path::new(&path)) {
@@ -63,17 +61,17 @@ pub fn handler(matches: &ArgMatches, tpl: TeraTplService) {
     let elements = r#"
     [
         {
-        "path": "main.rs",
+        "path": "src/main.rs",
         "element_type": 1,
         "template_name": "rust/command/command.tpl"
         },
         {
-        "path": "command",
+        "path": "src/command",
         "element_type": 3,
         "template_name": "rust/command/mod.tpl"
         },
         {
-        "path": "command/hello.rs",
+        "path": "src/command/hello.rs",
         "element_type": 1,
         "template_name": "rust/command/sub_command.tpl"
         },
