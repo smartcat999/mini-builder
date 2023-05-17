@@ -4,7 +4,7 @@ use std::io::Result;
 
 pub fn create_dir(path: &str) -> Result<()> {
     if path.ends_with(".rs") || path.ends_with(".go") ||
-        path.ends_with(".toml") || path.ends_with("md") {
+        path.ends_with(".toml") || path.ends_with("md") || path.ends_with("Makefile") {
         if let Some(parent_dir) = Path::new(path).parent() {
             if !parent_dir.exists() {
                 fs::create_dir_all(parent_dir)?;

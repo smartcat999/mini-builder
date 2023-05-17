@@ -113,6 +113,35 @@ impl ElementRender for EleRustTomlRender {
     }
 }
 
+pub struct EleRustMakefileRender {
+    path: String,
+    data: HashMap<String, String>,
+    template_name: String,
+    tpl_service: Rc<dyn TplService>,
+}
+
+impl EleRustMakefileRender {
+    pub fn new(path: String, data: HashMap<String, String>, template_name: String, tpl_service: Rc<dyn TplService>) -> Self {
+        EleRustMakefileRender {
+            path,
+            data,
+            template_name,
+            tpl_service,
+        }
+    }
+}
+
+impl ElementRender for EleRustMakefileRender {
+    fn render(&self) -> Result<()> {
+        utils::create_dir(&self.path)?;
+        let content = self.tpl_service.render(&self.template_name, &self.data);
+
+        fs::write(&self.path, content)?;
+        Ok(())
+    }
+}
+
+
 #[cfg(test)]
 mod test {
     #[allow(unused)]

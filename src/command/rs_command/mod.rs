@@ -3,9 +3,9 @@ use std::collections::HashMap;
 use std::rc::Rc;
 use clap::{value_parser, App, Arg, ArgAction, ArgMatches, Command};
 use crate::libs::basic::{Constructor};
-use crate::libs::constants::{Element, ELE_DIR, ELE_RUST_CODE, ELE_RUST_MOD, ELE_RUST_TOML};
+use crate::libs::constants::{Element, ELE_DIR, ELE_RUST_CODE, ELE_RUST_MOD, ELE_RUST_TOML, ELE_RUST_MAKEFILE};
 use crate::libs::constructor::EleConstructorV1;
-use crate::libs::rs::basic::{EleRustCodeRender, EleRustModRender, EleRustTomlRender};
+use crate::libs::rs::basic::{EleRustCodeRender, EleRustMakefileRender, EleRustModRender, EleRustTomlRender};
 use crate::libs::tpl::TeraTplService;
 
 // const TPL_PREFIX: &str = "rust/command/";
@@ -79,6 +79,11 @@ pub fn handler(matches: &ArgMatches, tpl: TeraTplService) {
         "path": "Cargo.toml",
         "element_type": 2,
         "template_name": "rust/command/Cargo.tpl"
+        },
+        {
+        "path": "Makefile",
+        "element_type": 4,
+        "template_name": "rust/Makefile.tpl"
         }
     ]"#;
 
@@ -105,6 +110,15 @@ pub fn handler(matches: &ArgMatches, tpl: TeraTplService) {
         } else if elem.element_type == ELE_RUST_TOML {
             constructor.insert(
                 Box::new(EleRustTomlRender::new(
+                    path.to_string() + &elem.path,
+                    data.clone(),
+                    elem.template_name.clone(),
+                    tpl.clone(),
+                ))
+            )
+        } else if elem.element_type == ELE_RUST_MAKEFILE {
+            constructor.insert(
+                Box::new(EleRustMakefileRender::new(
                     path.to_string() + &elem.path,
                     data.clone(),
                     elem.template_name.clone(),
