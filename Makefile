@@ -1,5 +1,5 @@
 .PHONY: all 
-all: build-linux build-windows build-macos build-macos-intel
+all: build-local-debug build-local build-linux build-windows build-macos build-macos-intel
 
 build-local-debug:
 	cargo build
