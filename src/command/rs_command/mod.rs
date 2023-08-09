@@ -16,20 +16,23 @@ pub fn new_sub_command<'help>() -> App<'help> {
         .arg(
             Arg::new("name")
                 .default_values(&["excel-tool"])
+                .long("name")
                 .help("生成的命令行工具项目名"),
         )
         .arg(
             Arg::new("version")
                 .default_value("v1.0")
+                .long("version")
                 .short('v')
                 .help("版本信息"),
         )
         .arg(
             Arg::new("author")
+                .long("author")
                 .default_value("smartcat")
                 .help("作者"),
         )
-        .override_usage("minictl rs -name execl-tool -d ./tmp -v v1.0 --author smartcat\n  ")
+        .override_usage("minictl rs --name excel-tool -v v1.0 --author smartcat\n  ")
 }
 
 pub fn handler(matches: &ArgMatches, tpl: TeraTplService) {
